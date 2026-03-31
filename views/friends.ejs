@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends</title>
+    <link rel="stylesheet" href="/css/friends.css">
+</head>
+<body>
+
+<div class="friends-page">
+
+<div class="container">
+<% data.forEach(i => { %>
+    <% if (!friends.includes(i._id.toString())) { %>
+
+    <div class="card" onclick="profile(`<%= i._id %>`)">
+        <img src="<%= i.profilePic %>" width="100%">
+        <h3><%= i.name %></h3>
+
+        <% if (requestSend.includes(i._id.toString())) { %>
+            <button class="requested" disabled>Requested</button>
+
+        <% } else if (requestReceived.includes(i._id.toString())) { %>
+            <button class="accept" onclick="event.stopPropagation(); acceptFriend(`<%= i._id %>`)">
+                Accept
+            </button>
+
+        <% } else { %>
+            <button class="add" onclick="event.stopPropagation(); addFriend(`<%= i._id %>`)">
+                Add Friend
+            </button>
+        <% } %>
+
+    </div>
+
+    <% } %>
+<% }) %>
+</div>
+
+</div>
+
+
+<script>
+    function profile(id){
+        window.location.href = `/user/profile/${id}`;
+    }
+
+    function addFriend(id){
+        fetch(`/user/friends/${id}`,{
+            method:"PATCH",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({})
+        })
+        .then(res=>res.json())   // ✅ fixed
+        .then(data=>{
+            window.location.reload();
+        })
+    }
+
+    function acceptFriend(id){
+        fetch(`/user/friends/accept/${id}`,{
+            method:"PATCH",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({})
+        })
+        .then(res=>res.json())   // ✅ fixed
+        .then(data=>{
+            window.location.reload();
+        })
+    }
+</script>
+
+</body>
+</html>

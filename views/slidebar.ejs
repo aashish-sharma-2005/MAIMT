@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="css/sliderbar.css"> -->
+</head>
+
+<body>
+    <div class="sidebar">
+    <button onclick="toggleSidebar()">☰</button>
+    <h2><a href="/user/profile"><%= username %></a></h2>
+    <nav>
+        <a href="/user/friends">👥 Friends</a>
+        <a href="#">🕒 Memories</a>
+        <a href="#">🔖 Saved</a>
+        <a href="#">👪 Groups</a>
+        <a href="#">🎬 Reels</a>
+        <a href="#">🛒 Shopping</a>
+        <a href="/user/logout">Logout</a>
+    </nav>
+</div>
+<script>
+function toggleSidebar(){
+  document.querySelector(".sidebar").classList.toggle("active");
+}
+</script>
+</body>
+</html>

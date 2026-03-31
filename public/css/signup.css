@@ -1,0 +1,71 @@
+/* BODY */
+body {
+    margin: 0;
+    padding: 0;
+    background: #f0f2f5;
+    font-family: Arial, sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* BOX */
+.signup-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 340px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+/* HEADING */
+.signup-box h1 {
+    color: #1877f2;
+    margin-bottom: 20px;
+}
+
+/* INPUT */
+.signup-box input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+}
+
+/* BUTTON */
+.signup-box button {
+    width: 100%;
+    padding: 10px;
+    background: #42b72a;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.signup-box button:hover {
+    background: #36a420;
+}
+
+/* LINK */
+.signup-box a {
+    color: #1877f2;
+    text-decoration: none;
+}
+
+/* OTP BOX */
+#verifyotp {
+    margin-top: 15px;
+}
+
+/* MESSAGE */
+#msg {
+    margin-top: 10px;
+    font-size: 14px;
+}

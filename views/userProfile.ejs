@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+
+<body>
+<link rel="stylesheet" href="/css/profile.css">
+
+<div class="profile">
+
+    <!-- COVER -->
+    <div class="cover">
+        <img src="https://via.placeholder.com/1000x250" class="cover-img">
+
+        <div class="profile-info">
+            
+            <img 
+                src="<%= user.profilePic && user.profilePic !== '' ? user.profilePic : 'https://via.placeholder.com/120' %>" 
+                class="profile-pic"
+            >
+
+            <div>
+                <h2><%= user.name %></h2>
+                <p>@<%= user.email.split('@')[0] %></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="actions">
+        <button class="add"><a href="/user/friends">Add Friends</a></button>
+        <button class="msg">Message</button>
+
+    </div>
+
+    <!-- INFO -->
+    <div class="card">
+        <p><b>Email:</b> <%= user.email %></p>
+        <p><b>Friends:</b> <%= user.friends.length %></p>
+        <p><b>Requests Sent:</b> <%= user.requestSend.length %></p>
+        <p><b>Requests Received:</b> <%= user.requestRecieve.length %></p>
+    </div>
+
+    <!-- POSTS -->
+    <div class="posts">
+
+        <div class="card">
+            <h3>Post Title</h3>
+            <p>Yaha user ke posts dikhenge...</p>
+        </div>
+
+        <div class="card">
+            <h3>Another Post</h3>
+            <p>Yaha aur content...</p>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function addFriend(id){
+    fetch(`/user/friends/${id}`,{
+        method:"PATCH",
+        headers: {"Content-Type": "application/json"}
+    })
+    .then(res=>res.json())
+    .then(()=> window.location.reload())
+}
+
+function acceptFriend(id){
+    fetch(`/user/friends/accept/${id}`,{
+        method:"PATCH",
+        headers: {"Content-Type": "application/json"}
+    })
+    .then(res=>res.json())
+    .then(()=> window.location.reload())
+}
+</script>
+</body>
+
+</html>

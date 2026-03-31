@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/notifications.css">
+</head>
+<body>
+<div class="notifications">
+
+    <h1>Notifications</h1>
+
+    <% users.forEach(i=>{ %>
+        <div class="card" onclick="profile(`<%= i._id %>`)">
+
+            <h2><%= i.name %></h2>
+
+            <div class="btns">
+                <button class="accept" onclick="accept(event, `<%= i._id %>`)">
+                    Accept
+                </button>
+
+                <button class="reject" onclick="reject(event, `<%= i._id %>`)">
+                    Reject
+                </button>
+            </div>
+
+        </div>
+    <% }) %>
+
+</div>
+
+<script>
+function profile(id){
+    window.location.href = `/user/profile/${id}`;
+}
+
+function accept(e,id){
+    e.stopPropagation();
+
+    fetch(`/user/friends/accept/${id}`,{
+        method:"PATCH",
+        headers:{'content-type':'application/json'}
+    })
+    .then(res=>res.json())
+    .then(()=>{
+        window.location.reload();
+    })
+}
+
+function reject(e,id){
+    e.stopPropagation();
+
+    fetch(`/user/friends/reject/${id}`,{
+        method:"PATCH",
+        headers:{'content-type':'application/json'}
+    })
+    .then(res=>res.json())
+    .then(()=>{
+        window.location.reload();
+    })
+}
+</script>
+</body>
+</html>

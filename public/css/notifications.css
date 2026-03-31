@@ -1,0 +1,60 @@
+/* WRAPPER */
+.notifications {
+    max-width: 700px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* HEADING */
+.notifications h1 {
+    margin-bottom: 20px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* NAME */
+.card h2 {
+    margin: 0;
+}
+
+/* BUTTON CONTAINER */
+.btns {
+    display: flex;
+    gap: 10px;
+}
+
+/* BUTTONS */
+button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+}
+
+/* ACCEPT */
+.accept {
+    background: #42b72a;
+}
+
+/* REJECT */
+.reject {
+    background: #e41e3f;
+}
+
+/* HOVER */
+.card:hover {
+    background: #f0f2f5;
+}

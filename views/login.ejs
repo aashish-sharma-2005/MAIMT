@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <div class="login-box">
+    <h1>FaceBook Login</h1>
+
+    Email : <input type="email" id="email"> <br>
+    Password : <input type="password" id="password"> <br>
+
+    <button onclick="send()">Login</button>
+
+    <p>not registered ? <a href="/auth/signup">signup</a></p>
+
+    <span id="error"></span>
+</div>
+<script>
+    function send(){
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const error = document.getElementById("error");
+
+        error.innerText = "";
+
+        if(email === "" || password === ""){
+            error.style.color = "red";
+            error.innerText = "Email aur Password dono bharne padenge!";
+            return;
+        }
+
+        fetch('/auth/login',{
+            method:"POST",
+            headers:{"content-type":"application/json"},
+            body:JSON.stringify({email,password})
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            if(data.status){
+                window.location.href = data.location; // redirect
+            } else {
+                error.style.color = "red";
+                error.innerText = data.msg || "Invalid credentials";
+            }
+        })
+        .catch(()=>{
+            error.innerText = "Server error";
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/profile.css">
+</head>
+
+<body>
+<div class="profile-page">
+
+<div class="profile">
+
+    <!-- COVER -->
+    <div class="cover">
+        <img src="https://via.placeholder.com/1000x250" class="cover-img">
+
+        <div class="profile-info">
+            
+            <!-- PROFILE PIC -->
+            <img 
+                src="<%= user.profilePic && user.profilePic !== '' ? user.profilePic : 'https://via.placeholder.com/120' %>" 
+                class="profile-pic"
+            >
+
+            <div class="user-text">
+                <h2><%= user.name %></h2>
+                <p>@<%= user.email.split('@')[0] %></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ACTION BUTTONS -->
+    <div class="actions">
+        <% if (currentUser.friends.includes(user._id.toString())) { %>
+            <button class="friends" disabled>Friends</button>
+        <% } else if (currentUser.requestSend.includes(user._id.toString())) { %>
+            <button class="requested" disabled>Requested</button>
+        <% } else if (currentUser.requestRecieve.includes(user._id.toString())) { %>
+            <button class="accept" onclick="acceptFriend(`<%= user._id %>`)">Accept</button>
+        <% } else { %>
+            <button onclick="addFriend(`<%= user._id %>`)" class="add">Add Friend</button>
+        <% } %>
+        <button class="msg">Message</button>
+    </div>
+
+    <!-- INFO -->
+    <div class="card">
+        <p><b>Email:</b> <%= user.email %></p>
+        <p><b>Friends:</b> <%= user.friends.length %></p>
+        <p><b>Requests Sent:</b> <%= user.requestSend.length %></p>
+        <p><b>Requests Received:</b> <%= user.requestRecieve.length %></p>
+    </div>
+
+    <!-- POSTS -->
+    <div class="posts">
+        <div class="card">
+            <h3>Posts</h3>
+            <p>Yaha future me user ke posts aayenge...</p>
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+<script>
+    function addFriend(id){
+        fetch(`/user/friends/${id}`,{
+            method:"PATCH",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({})
+        })
+        .then(res=>res.json())   // ✅ fixed
+        .then(data=>{
+            window.location.reload();
+        })
+    }
+</script>
+</body>
+
+</html>

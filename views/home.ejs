@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/sliderbar.css">
+</head>
+<body>
+    <%- include('header/header') %>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <%- include('slidebar',{username:username}) %>
+        </aside>
+        <main class="content">
+            <% if(page === "feed") { %>
+                <%- include('feed') %>
+            <% } else if(page === "profile") { %>
+                <%- include('profile',{user: profileUser,currentUser: currentUser}) %>
+            <% } else if(page === "friends") { %>
+                <%- include('friends',{data:data,friends:friends,requestSend:requestSend,requestReceived:requestReceived}) %>
+            <% } else if(page === "notifications") { %>
+                <%- include('notifications',{users,users}) %>
+            <% } else if(page === "currentprofile") { %>
+                <%- include('userProfile',{user:user,currentUser:currentuser}) %>
+            <%} %>
+        </main>
+
+    </div>
+</body>
+</html>

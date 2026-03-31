@@ -1,0 +1,35 @@
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background-color: #f0f2f5;
+    padding: 15px;
+}
+
+/* nav links */
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #050505;
+    font-size: 16px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+/* hover effect */
+.sidebar a:hover {
+    background-color: #e4e6eb;
+}
+
+/* active feel */
+.sidebar a:active {
+    background-color: #d8dadf;
+}

@@ -1,0 +1,50 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1877f2;
+    padding: 10px 20px;
+    color: white;
+}
+
+/* LEFT */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-left h2 {
+    margin: 0;
+}
+
+#searchBar {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+}
+
+/* CENTER */
+.nav-center nav {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-center a {
+    text-decoration: none;
+    font-size: 22px;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.nav-center a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}

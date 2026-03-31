@@ -1,0 +1,72 @@
+/* Sirf friends page ko target karega */
+.friends-page {
+    padding: 20px;
+}
+
+/* Grid */
+.friends-page .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+/* Card size chhota kiya */
+.friends-page .card {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Hover */
+.friends-page .card:hover {
+    transform: translateY(-3px);
+}
+
+/* Image small */
+.friends-page .card img {
+    width: 100%;
+    height: 100px;   /* 🔥 half size */
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Name */
+.friends-page .card h3 {
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+/* Buttons */
+.friends-page button {
+    width: 100%;
+    padding: 6px;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    color: white;
+}
+
+/* Colors */
+.friends-page .add {
+    background: #1877f2;
+}
+
+.friends-page .requested {
+    background: gray;
+}
+
+.friends-page .accept {
+    background: #28a745;
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+    .friends-page .container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
