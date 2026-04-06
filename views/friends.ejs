@@ -17,23 +17,18 @@
     <div class="card" onclick="profile(`<%= i._id %>`)">
         <img src="<%= i.profilePic %>" width="100%">
         <h3><%= i.name %></h3>
-
         <% if (requestSend.includes(i._id.toString())) { %>
             <button class="requested" disabled>Requested</button>
-
         <% } else if (requestReceived.includes(i._id.toString())) { %>
             <button class="accept" onclick="event.stopPropagation(); acceptFriend(`<%= i._id %>`)">
                 Accept
             </button>
-
         <% } else { %>
             <button class="add" onclick="event.stopPropagation(); addFriend(`<%= i._id %>`)">
                 Add Friend
             </button>
         <% } %>
-
     </div>
-
     <% } %>
 <% }) %>
 </div>

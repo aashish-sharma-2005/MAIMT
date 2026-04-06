@@ -1,7 +1,8 @@
 const bcrypt = require("bcrypt");
 const UserData = require("../models/user");
 const testEmail = require("../mail")
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const userValidate = require("../validations/userValidation,js");
 const secret = "dorami"
 
 function generateOTP(){
@@ -18,7 +19,8 @@ function getSignup(req,res){
 }
 async function postSignup(req,res){
     try{
-        const userInfo = req.body;
+        const userInfo = await userValidate.validate(req.body)
+        // const userInfo = req.body;
         userInfo.password = await bcrypt.hash(userInfo.password,10);
         const data = await UserData.findOne({email:userInfo.email})
         if(data) return res.json({status:false,msg:"Email Exist"})
@@ -32,7 +34,7 @@ async function postSignup(req,res){
             const token = jwt.sign(payload,secret)
             res.cookie('user',token,{
                 httpOnly:true,
-                secure:true,
+                secure:false,
                 maxAge: 1000 * 60 * 3
             })
             return res.json({status:true,msg:"verify email",location:"/auth/signup",});
@@ -49,9 +51,11 @@ async function postSignup(req,res){
 async function postVerifyEmail(req,res){
     try{
         const {email,otp} = req.body;
-        const user = jwt.verify(req.cookies.user,secret);
-        console.log("g ",user.otp.toString())
-        console.log("user ",otp)
+        const token = req.cookies.user;
+        if (!token) {
+            return res.json({status:false,msg:"Token missing"});
+        }
+        const user = jwt.verify(token,secret);
         //
         if(user.otp.toString()===otp){
             const ob = {name:user.name,email:user.email,password:user.password}

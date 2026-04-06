@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+
+    <link rel="stylesheet" href="/css/createpost.css">
+</head>
+
+<body>
+
+    <div class="post-container">
+        <form action="/user/<%= user._id %>/createPost" method="POST" enctype="multipart/form-data" class="post-form">
+            <textarea name="content" placeholder="What's on your mind?" required></textarea>
+            <!-- Toggle -->
+            <div class="type-select">
+                <label><input type="radio" name="type" value="image" checked> Image</label>
+                <label><input type="radio" name="type" value="video"> Video</label>
+            </div>
+            <!-- Image -->
+            <input type="file" name="image" accept="image/*" id="imageInput">
+            <!-- Video -->
+            <input type="file" name="video" accept="video/*" id="videoInput" style="display:none;">
+            <!-- Privacy -->
+            <select name="privacy">
+                <option value="public">🌍 Public</option>
+                <option value="friends">👥 Friends</option>
+                <option value="private">🔒 Only Me</option>
+            </select>
+            <button type="submit">Post</button>
+        </form>
+    </div>
+
+    <script>
+        // toggle input
+        const imageInput = document.getElementById("imageInput");
+        const videoInput = document.getElementById("videoInput");
+        const radios = document.querySelectorAll('input[name="type"]');
+
+        radios.forEach(radio => {
+            radio.addEventListener("change", () => {
+                if (radio.value === "image") {
+                    imageInput.style.display = "block";
+                    videoInput.style.display = "none";
+                    videoInput.value = "";
+                } else {
+                    videoInput.style.display = "block";
+                    imageInput.style.display = "none";
+                    imageInput.value = "";
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

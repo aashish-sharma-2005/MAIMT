@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="card">
+        <h2>Friends List</h2>
+        <% if(friends.length) {%>
+            <div>
+                <% friends.forEach(i=> { %>
+                    <div onclick="profile(`<%= i._id %>`)">
+                        <img src="<%= i.profilePic %>" width="100%">
+                        <h3>
+                            <%= i.name %>
+                        </h3>
+                    </div>
+                    <% }) %>
+            </div>
+        <% } else {%>
+            <h3>No Friends</h3>
+        <% } %>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <% if(user._id.toString() === currentUser._id.toString()){ %>
+        <button onclick="window.location.href='/user/`<%= user._id %>`/createPost'">create new post</button>
+    <% }%>
+    <div class="card">
+        <h3>Photos</h3>
+        <p>Photos yaha dikhenge</p>
+    </div>
+</body>
+
+</html>

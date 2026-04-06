@@ -9,79 +9,144 @@
 </head>
 
 <body>
-<link rel="stylesheet" href="/css/profile.css">
-
-<div class="profile">
-
-    <!-- COVER -->
-    <div class="cover">
-        <img src="https://via.placeholder.com/1000x250" class="cover-img">
-
-        <div class="profile-info">
-            
-            <img 
-                src="<%= user.profilePic && user.profilePic !== '' ? user.profilePic : 'https://via.placeholder.com/120' %>" 
-                class="profile-pic"
-            >
-
-            <div>
+    <link rel="stylesheet" href="/css/profile.css">
+    <div class="profile">
+        <!-- COVER -->
+        <div class="cover">
+            <img src="<%= user.coverPhoto || 'https://via.placeholder.com/1000x250' %>" class="cover-img"id="coverImage">
+            <label for="coverInput" class="cover-camera">📷</label>
+            <input type="file" id="coverInput" hidden onchange="uploadCoverPic()">
+            <!-- PROFILE PIC -->
+            <div class="profile-pic-wrapper">
+                <img src="<%= user.profilePic && user.profilePic !== '' ? user.profilePic : 'https://via.placeholder.com/120' %>"class="profile-pic" id="profileImage">
+                <label for="fileInput" class="camera-btn">📷</label>
+                <input type="file" id="fileInput" hidden onchange="uploadProfilePic()">
+            </div>
+            <!-- NAME -->
+            <div class="user-info">
                 <h2><%= user.name %></h2>
                 <p>@<%= user.email.split('@')[0] %></p>
             </div>
         </div>
-    </div>
-
-    <!-- ACTION BUTTONS -->
-    <div class="actions">
-        <button class="add"><a href="/user/friends">Add Friends</a></button>
-        <button class="msg">Message</button>
-
-    </div>
-
-    <!-- INFO -->
-    <div class="card">
-        <p><b>Email:</b> <%= user.email %></p>
-        <p><b>Friends:</b> <%= user.friends.length %></p>
-        <p><b>Requests Sent:</b> <%= user.requestSend.length %></p>
-        <p><b>Requests Received:</b> <%= user.requestRecieve.length %></p>
-    </div>
-
-    <!-- POSTS -->
-    <div class="posts">
-
+        <!-- ACTION BUTTONS -->
+        <div class="actions">
+            <button class="add"><a href="/user/friends">Add Friends</a></button>
+            <button class="msg">Message</button>
+        </div>
+        <!-- INFO -->
         <div class="card">
-            <h3>Post Title</h3>
-            <p>Yaha user ke posts dikhenge...</p>
+            <p><b>Friends:</b>
+                <%= user.friends.length %>
+            </p>
+            <p><b>Requests Sent:</b>
+                <%= user.requestSend.length %>
+            </p>
+            <p><b>Requests Received:</b>
+                <%= user.requestRecieve.length %>
+            </p>
         </div>
 
-        <div class="card">
-            <h3>Another Post</h3>
-            <p>Yaha aur content...</p>
+        <!-- tabs -->
+        <div>
+            <button onclick="showSection('all')">All</button>
+            <button onclick="showSection('about')">About</button>
+            <button onclick="showSection('friends')">Friends</button>
+            <button onclick="showSection('photos')">Photos</button>
+            <button onclick="showSection('reels')">Reels</button>
         </div>
-
+        <div class="content">
+            <!-- ALL -->
+            <div id="all" class="section">
+                <%- include('profilefunctions/all',{user:user,currentUser:currentuser,friends:friends}) %>
+            </div>
+            <!-- ABOUT -->
+            <div id="about" class="section" style="display:none;">
+                <%- include('profilefunctions/about',{user:user,currentUser:currentuser,friends:friends}) %>
+            </div>
+            <!-- FRIENDS -->
+            <div id="friends" class="section" style="display:none;">
+                <%- include('profilefunctions/friends',{user:user,currentUser:currentuser,friends:friends}) %>
+            </div>
+            <!-- PHOTOS -->
+            <div id="photos" class="section" style="display:none;">
+                <%- include('profilefunctions/photos',{user:user,currentUser:currentuser,friends:friends}) %>
+            </div>
+            <!-- REELS -->
+            <div id="reels" class="section" style="display:none;">
+                <%- include('profilefunctions/reels',{user:user,currentUser:currentuser,friends:friends}) %>
+            </div>
+        </div>
     </div>
 
-</div>
+    <script>
+        function uploadCoverPic() {
+            const pic = document.getElementById("coverInput").files[0]
+            const formdata = new FormData()
+            formdata.append("coverpic", pic)
+            fetch('/user/profile/uploadcover', {
+                method: "post",
+                body: formdata
+            })
+                .then(res => res.json())
+                .then(data => {
+                    window.location.reload()
+                    if (!data.status) alert("Please Try Again Later")
+                })
+        }
+        function uploadProfilePic() {
+            const pic = document.getElementById("fileInput").files[0];
+            const formdata = new FormData()
+            formdata.append('profilepic', pic);
+            fetch('/user/profile/uploadpic', {
+                method: "post",
+                body: formdata
+            })
+                .then(res => res.json())
+                .then(data => {
+                    window.location.reload()
+                    if (!data.status) alert("Please Try Again Later")
+                })
+        }
+        function showAboutTab(e, id) {
+            // hide all tabs
+            const tabs = document.querySelectorAll('.about-tab');
+            tabs.forEach(t => t.style.display = 'none');
+            // show selected
+            document.getElementById(id).style.display = 'block';
+            // active class
+            const items = document.querySelectorAll('.about-left li');
+            items.forEach(i => i.classList.remove('active'));
+            e.target.classList.add('active');
+        }
+        function profile(id) {
+            window.location.href = `/user/profile/${id}`;
+        }
+        function showSection(id) {
+            // sab sections hide karo
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(sec => sec.style.display = 'none');
 
-<script>
-function addFriend(id){
-    fetch(`/user/friends/${id}`,{
-        method:"PATCH",
-        headers: {"Content-Type": "application/json"}
-    })
-    .then(res=>res.json())
-    .then(()=> window.location.reload())
-}
+            // sirf clicked wala show karo
+            document.getElementById(id).style.display = 'block';
+        }
+        function addFriend(id) {
+            fetch(`/user/friends/${id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" }
+            })
+                .then(res => res.json())
+                .then(() => window.location.reload())
+        }
 
-function acceptFriend(id){
-    fetch(`/user/friends/accept/${id}`,{
-        method:"PATCH",
-        headers: {"Content-Type": "application/json"}
-    })
-    .then(res=>res.json())
-    .then(()=> window.location.reload())
-}
-</script>
+        function acceptFriend(id) {
+            fetch(`/user/friends/accept/${id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" }
+            })
+                .then(res => res.json())
+                .then(() => window.location.reload())
+        }
+    </script>
 </body>
 
 </html>

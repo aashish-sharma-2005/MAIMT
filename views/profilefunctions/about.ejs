@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="about-container">
+
+        <!-- LEFT SIDEBAR -->
+        <div class="about-left">
+            <h3>About</h3>
+            <ul>
+                <li class="active" onclick="showAboutTab(event,'intro')">Intro</li>
+                <li onclick="showAboutTab(event,'personal')">Personal details</li>
+                <li onclick="showAboutTab(event,'work')">Work</li>
+                <li onclick="showAboutTab(event,'education')">Education</li>
+                <li onclick="showAboutTab(event,'hobbies')">Hobbies</li>
+            </ul>
+        </div>
+
+        <!-- RIGHT CONTENT -->
+        <div class="about-right">
+
+            <div id="intro" class="about-tab">
+                <h3>Bio</h3>
+                <p>About you...</p>
+
+                <h4>Pinned details</h4>
+                <p>No details added</p>
+            </div>
+
+            <div id="personal" class="about-tab" style="display:none;">
+                <h3>Personal Details</h3>
+                <p>Email: <%= user.email %>
+                </p>
+            </div>
+
+            <div id="work" class="about-tab" style="display:none;">
+                <h3>Work</h3>
+                <p>No work info</p>
+            </div>
+
+            <div id="education" class="about-tab" style="display:none;">
+                <h3>Education</h3>
+                <p>No education info</p>
+            </div>
+
+            <div id="hobbies" class="about-tab" style="display:none;">
+                <h3>Hobbies</h3>
+                <p>No hobbies added</p>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

@@ -10,6 +10,7 @@ app.set('view engine','ejs');
 app.use(express.json());
 app.use(express.static('public'))
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 
 // signup otp expiry data not delete problem
 const midleware = require("./midlewares/verifyToken");

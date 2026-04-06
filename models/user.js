@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
         role:{type:"String",default:"user"},
         // otp:{type:"String"},
         profilePic:{type:String,default:""},
+        coverPhoto:{type:String,default:""},
         friends:[{type:mongoose.Schema.Types.ObjectId,ref:"user"}],
         // verify:{type:Boolean,default:"false"},
         requestSend:[{type:mongoose.Schema.Types.ObjectId,ref:"user"}],

@@ -38,7 +38,6 @@ function profile(id){
 
 function accept(e,id){
     e.stopPropagation();
-
     fetch(`/user/friends/accept/${id}`,{
         method:"PATCH",
         headers:{'content-type':'application/json'}

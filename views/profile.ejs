@@ -9,76 +9,130 @@
 </head>
 
 <body>
-<div class="profile-page">
-
-<div class="profile">
-
-    <!-- COVER -->
-    <div class="cover">
-        <img src="https://via.placeholder.com/1000x250" class="cover-img">
-
-        <div class="profile-info">
-            
-            <!-- PROFILE PIC -->
-            <img 
-                src="<%= user.profilePic && user.profilePic !== '' ? user.profilePic : 'https://via.placeholder.com/120' %>" 
-                class="profile-pic"
-            >
-
-            <div class="user-text">
-                <h2><%= user.name %></h2>
-                <p>@<%= user.email.split('@')[0] %></p>
+    <div class="profile-page">
+        <div class="profile">
+            <!-- COVER -->
+            <div class="cover">
+                <img src="<%= user.coverPhoto && user.coverPhoto !== '' ? user.coverPhoto : 'https://via.placeholder.com/120' %>" class="cover-img">
+                <div class="profile-info">
+                    <!-- PROFILE PIC -->
+                    <img src="<%= user.profilePic && user.profilePic !== '' ? user.profilePic : 'https://via.placeholder.com/120' %>"class="profile-pic">
+                    <div class="user-text">
+                        <h2><%= user.name %></h2>
+                        <p>@<%= user.email.split('@')[0] %></p>
+                    </div>
+                </div>
             </div>
+
+            <!-- ACTION BUTTONS -->
+            <div class="actions">
+                <% if (currentUser.friends.includes(user._id.toString())) { %>
+                    <button class="friends" disabled>Friends</button>
+                <% } else if (currentUser.requestSend.includes(user._id.toString())) { %>
+                    <button class="requested" disabled>Requested</button>
+                <% } else if (currentUser.requestRecieve.includes(user._id.toString())) { %>
+                    <button class="accept" onclick="acceptFriend(`<%= user._id %>`)">Accept</button>
+                <% } else { %>
+                    <button onclick="addFriend(`<%= user._id %>`)" class="add">Add Friend</button>
+                <% } %>
+                    <button class="msg">Message</button>
+            </div>
+            <!-- INFO -->
+            <div class="card">
+                <p><b>Friends:</b>
+                    <%= user.friends.length %>
+                </p>
+            </div>
+            <!-- tabs -->
+            <div>
+                <button onclick="showSection('all')">All</button>
+                <button onclick="showSection('about')">About</button>
+                <button onclick="showSection('friends')">Friends</button>
+                <button onclick="showSection('photos')">Photos</button>
+                <button onclick="showSection('reels')">Reels</button>
+            </div>
+            <div class="content">
+                <!-- ALL -->
+                <div id="all" class="section">
+                    <%- include('profilefunctions/all',{user:profileUser,currentUser:currentUser,friends:friends}) %>
+                </div>
+                <!-- ABOUT -->
+                <div id="about" class="section" style="display:none;">
+                    <%- include('profilefunctions/about',{user:profileUser,currentUser:currentUser,friends:friends}) %>
+                </div>
+                <!-- FRIENDS -->
+                <div id="friends" class="section" style="display:none;">
+                    <%- include('profilefunctions/friends',{user:profileUser,currentUser:currentUser,friends:friends})%>
+                </div>
+                <!-- PHOTOS -->
+                <div id="photos" class="section" style="display:none;">
+                    <%- include('profilefunctions/photos',{user:profileUser,currentUser:currentUser,friends:friends}) %>
+                </div>
+                <!-- REELS -->
+                <div id="reels" class="section" style="display:none;">
+                    <%- include('profilefunctions/reels',{user:profileUser,currentUser:currentUser,friends:friends}) %>
+                </div>
+            </div>
+
         </div>
-    </div>
-    
-    <!-- ACTION BUTTONS -->
-    <div class="actions">
-        <% if (currentUser.friends.includes(user._id.toString())) { %>
-            <button class="friends" disabled>Friends</button>
-        <% } else if (currentUser.requestSend.includes(user._id.toString())) { %>
-            <button class="requested" disabled>Requested</button>
-        <% } else if (currentUser.requestRecieve.includes(user._id.toString())) { %>
-            <button class="accept" onclick="acceptFriend(`<%= user._id %>`)">Accept</button>
-        <% } else { %>
-            <button onclick="addFriend(`<%= user._id %>`)" class="add">Add Friend</button>
-        <% } %>
-        <button class="msg">Message</button>
+
     </div>
 
-    <!-- INFO -->
-    <div class="card">
-        <p><b>Email:</b> <%= user.email %></p>
-        <p><b>Friends:</b> <%= user.friends.length %></p>
-        <p><b>Requests Sent:</b> <%= user.requestSend.length %></p>
-        <p><b>Requests Received:</b> <%= user.requestRecieve.length %></p>
-    </div>
+    <script>
+        function showAboutTab(e, id) {
+            // hide all tabs
+            const tabs = document.querySelectorAll('.about-tab');
+            tabs.forEach(t => t.style.display = 'none');
+            // show selected
+            document.getElementById(id).style.display = 'block';
+            // active class
+            const items = document.querySelectorAll('.about-left li');
+            items.forEach(i => i.classList.remove('active'));
+            e.target.classList.add('active');
+        }
+        function profile(id) {
+            window.location.href = `/user/profile/${id}`;
+        }
+        function showSection(id) {
+            // sab sections hide karo
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(sec => sec.style.display = 'none');
 
-    <!-- POSTS -->
-    <div class="posts">
-        <div class="card">
-            <h3>Posts</h3>
-            <p>Yaha future me user ke posts aayenge...</p>
-        </div>
-    </div>
-
-</div>
-
-</div>
-
-<script>
-    function addFriend(id){
-        fetch(`/user/friends/${id}`,{
-            method:"PATCH",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({})
-        })
-        .then(res=>res.json())   // ✅ fixed
-        .then(data=>{
-            window.location.reload();
-        })
-    }
-</script>
+            // sirf clicked wala show karo
+            document.getElementById(id).style.display = 'block';
+        }
+        function acceptFriend(id) {
+            fetch(`/user/friends/accept/${id}`, {
+                method: "PATCH",
+                headers: { 'content-type': 'application/json' }
+            })
+                .then(res => res.json())
+                .then(() => {
+                    window.location.reload();
+                })
+        }
+        function addFriend(id) {
+            fetch(`/user/friends/accept/${id}`, {
+                method: "PATCH",
+                headers: { 'content-type': 'application/json' }
+            })
+                .then(res => res.json())
+                .then(() => {
+                    window.location.reload();
+                })
+        }
+        function addFriend(id) {
+            fetch(`/user/friends/${id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({})
+            })
+                .then(res => res.json())   // ✅ fixed
+                .then(data => {
+                    window.location.reload();
+                })
+        }
+    </script>
 </body>
 
 </html>

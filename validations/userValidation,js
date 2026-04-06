@@ -1,0 +1,9 @@
+const yup = require("yup")
+
+const userSchema = yup.object({
+    name:yup.string().required("Name is Required").min(3,"Name must contain more than 3 character"),
+    email:yup.string().required("Email is Required"),
+    password:yup.string().required("password is Required").min(3,"Min 3 character long")
+})
+
+module.exports = userSchema;

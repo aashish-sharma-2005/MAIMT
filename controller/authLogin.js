@@ -26,9 +26,12 @@ async function postLogin(req,res){
                     friends:user.friends
                 }
                 const token = jwt.sign(payload,secret);
+                 if (!token) {
+                    return res.json({status:false,msg:"Token missing"});
+                }
                 res.cookie('token',token,{
                     httpOnly:true,
-                    secure:true,
+                    secure:false,
                     maxAge:1000*60*20
                 })
                 res.json({status:true,location:"/user"});
