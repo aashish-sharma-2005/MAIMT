@@ -7,6 +7,7 @@ const {getProfile,getCurrectProfile,uploadpic,uploadcover} = require("../control
 const {getFriends,sendRequest,acceptRequest,rejectRequest} = require("../controller/friends")
 const {getNotifications} = require("../controller/notifications")
 const {getCreateNewPost,postCreateNewPost} = require("../controller/posts")
+const {getReels} = require("../controller/reels")
 
 router.get('/',getHome);
 router.post('/',postHome);
@@ -23,6 +24,7 @@ router.patch('/friends/reject/:id',rejectRequest)
 router.get('/notifications',getNotifications)
 router.get('/:id/createPost',getCreateNewPost);
 router.post('/:id/createPost',upload.fields([{name:"image",maxCount:1},{name:"video",maxCount:1}]),postCreateNewPost);
+router.get('/video',getReels)
 
 
 router.get('/logout',(req,res)=>{res.clearCookie("token");res.redirect('/')})

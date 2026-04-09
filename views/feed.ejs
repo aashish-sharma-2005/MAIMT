@@ -2,10 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Feed</title>
+    <link rel="stylesheet" href="/css/feed.css">
 </head>
 <body>
-    <h1>feed</h1>
+    <div class="feed-container">
+        <% if(data.length!=0){ %>
+                <% data.forEach(post=> { %>
+                    <div class="post-card">
+                        <!-- USER INFO -->
+                        <div class="post-header">
+                            <img src="<%= post.user.profilePic || '/default.png' %>" class="profile-img">
+                            <div>
+                                <h4><%= post.user.name %></h4>
+                                <small><%= new Date(post.createdAt).toLocaleString() %></small>
+                            </div>
+                        </div>
+                        <!-- CONTENT -->
+                        <div class="post-content">
+                            <p><%= post.content %></p>
+                        </div>
+                        <!-- IMAGE -->
+                        <div class="post-media">
+                            <% if(post.image){ %>
+                                <img src="<%= post.image %>" class="post-img">
+                            <% } %>
+                            <% if(post.video){ %>
+                                <video controls class="post-video"><source src="<%= post.video %>" type="video/mp4"></video>
+                            <% } %>
+                        </div>
+                        <!-- ACTIONS -->
+                        <div class="post-actions">
+                            <button>👍 Like</button>
+                            <button>💬 Comment</button>
+                            <button>↗️ Share</button>
+                        </div>
+                    </div>
+                    <% }) %>
+        <% } else { %>
+            <h1>You're All Caught Up</h1>
+        <% } %>
+    </div>
+    <h1>You're All Caught Up</h1>
 </body>
+
 </html>

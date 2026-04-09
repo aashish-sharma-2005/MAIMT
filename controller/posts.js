@@ -13,11 +13,13 @@ async function postCreateNewPost(req,res){
     try {
         const {content,type,privacy} = req.body;
         if(type==="image"){
-            const ob = {user:req.user.id,content:content,image:req.files.image[0].path}
+            const ob = {user:req.user.id,content:content,privacy:privacy,image:req.files.image[0].path}
             const result = await Post.insertOne(ob);
             if(result) return res.redirect("/user")
         }else if(type==="video"){
-            console.log("vdo")
+            const ob = {user:req.user.id,content:content,privacy:privacy,video:req.files.video[0].path}
+            const result = await Post.insertOne(ob);
+            if(result) return res.redirect("/user")
         }
     } catch (error) {
         console.log(error)

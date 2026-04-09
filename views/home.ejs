@@ -17,7 +17,7 @@
         </aside>
         <main class="content">
             <% if(page === "feed") { %>
-                <%- include('feed') %>
+                <%- include('feed',{data:data}) %>
             <% } else if(page === "profile") { %>
                 <%- include('profile',{user:profileUser,currentUser:currentUser,friends:friends}) %>
             <% } else if(page === "friends") { %>
@@ -28,6 +28,8 @@
                 <%- include('userProfile',{user:user,currentUser:currentuser,friends:friends}) %>
             <%} else if(page === "createNewPost"){ %> 
                 <%- include('createPost',{user:user}) %>
+            <% } else if(page === "reels") { %>
+                <%- include('reels',{data:data}) %>
             <% } %>
         </main>
 

@@ -11,9 +11,10 @@ const storage = new CloudinaryStorage({
     cloudinary:cloudinary,
     params:{
         folder:"facebook",
+        resource_type: "auto",
         format:async(req,file)=>file.mimetype.split("/")[1],
         public_id:(req,file)=> Date.now() + file.originalname
     }
 })
-const upload = multer({storage:storage,limits:{fileSize:10*1024*1024}})
+const upload = multer({storage:storage,limits:{fileSize:30*1024*1024}})
 module.exports=upload;

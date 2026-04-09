@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Reels</title>
+        <link rel="stylesheet" href="/css/reels.css">
+    </head>
+
+    <body>
+
+        <div class="reels-container">
+
+            <% data.forEach(post=> { %>
+                <% if(post.video){ %>
+
+                    <div class="reel">
+
+                        <!-- VIDEO -->
+                        <video class="reel-video" muted loop>
+                            <source src="<%= post.video %>" type="video/mp4">
+                        </video>
+
+                        <!-- OVERLAY -->
+                        <div class="reel-overlay">
+
+                            <!-- USER -->
+                            <div class="reel-user">
+                                <img src="<%= post.user.profilePic || '/default.png' %>">
+                                <h4>
+                                    <%= post.user.name %>
+                                </h4>
+                            </div>
+
+                            <!-- CONTENT -->
+                            <p class="reel-text">
+                                <%= post.content %>
+                            </p>
+
+                            <!-- ACTIONS -->
+                            <div class="reel-actions">
+                                <button>❤️</button>
+                                <button>💬</button>
+                                <!-- <button>📤</button> -->
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <% } %>
+                        <% }) %>
+
+        </div>
+
+        <script>
+            const videos = document.querySelectorAll(".reel-video");
+
+            // autoplay on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.play();
+                    } else {
+                        entry.target.pause();
+                    }
+                });
+            }, { threshold: 0.7 });
+
+            videos.forEach(video => observer.observe(video));
+
+            // click to pause/play
+            videos.forEach(video => {
+                video.addEventListener("click", () => {
+                    if (video.paused) {
+                        video.play();
+                    } else {
+                        video.pause();
+                    }
+                });
+            });
+        </script>
+
+    </body>
+
+    </html>
+</body>
+
+</html>
