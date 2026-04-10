@@ -19,13 +19,13 @@
             <% if(page === "feed") { %>
                 <%- include('feed',{data:data}) %>
             <% } else if(page === "profile") { %>
-                <%- include('profile',{user:profileUser,currentUser:currentUser,friends:friends}) %>
+                <%- include('profile',{user:profileUser,currentUser:currentUser,friends:friends,posts:posts}) %>
             <% } else if(page === "friends") { %>
                 <%- include('friends',{data:data,friends:friends,requestSend:requestSend,requestReceived:requestReceived}) %>
             <% } else if(page === "notifications") { %>
                 <%- include('notifications',{users,users}) %>
             <% } else if(page === "currentprofile") { %>
-                <%- include('userProfile',{user:user,currentUser:currentuser,friends:friends}) %>
+                <%- include('userProfile',{user:user,currentUser:currentuser,friends:friends,posts:posts}) %>
             <%} else if(page === "createNewPost"){ %> 
                 <%- include('createPost',{user:user}) %>
             <% } else if(page === "reels") { %>

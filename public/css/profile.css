@@ -286,10 +286,10 @@
 /* ===== USER INFO (NAME + USERNAME) ===== */
 .user-info {
     position: absolute;
-    bottom: 20px;
+    bottom: -40px;
     left: 160px;
-    color: white;
-    text-shadow: 0 0 10px rgba(0,0,0,0.7);
+    color: black;
+    /* text-shadow: 0 0 0px rgba(0,0,0,0.7); */
 }
 
 .user-info h2 {

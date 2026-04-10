@@ -5,16 +5,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/photos.css">
 </head>
 
 <body>
-    <% if(user._id.toString() === currentUser._id.toString()){ %>
+    <% if(user._id.toString()===currentUser._id.toString()){ %>
         <button onclick="window.location.href='/user/`<%= user._id %>`/createPost'">create new post</button>
-    <% }%>
-    <div class="card">
-        <h3>Photos</h3>
-        <p>Photos yaha dikhenge</p>
-    </div>
+        <% }%>
+            <div class="posts">
+                <% if(posts.length===0){ %>
+                    <p>No posts yet</p>
+                    <% } %>
+
+                        <% posts.forEach(post=> { %>
+                            <div class="post-card">
+                                <!-- USER INFO -->
+                                <div class="post-user">
+                                    <img src="<%= post.user?.profilePic || user.profilePic %>" class="post-user-img">
+                                    <h4>
+                                        <%= post.user?.name || user.name %>
+                                    </h4>
+                                    <!-- DATE -->
+                                    <small>
+                                        <%= new Date(post.createdAt).toLocaleString('en-IN', { day: 'numeric' ,
+                                            month: 'long' , year: 'numeric' , hour: 'numeric' , minute: '2-digit' }) %>
+                                    </small>
+                                </div>
+
+                                <!-- TEXT -->
+                                <% if(post.caption){ %>
+                                    <p class="post-caption">
+                                        <%= post.caption %>
+                                    </p>
+                                    <% } %>
+
+                                        <!-- IMAGE -->
+                                        <% if(post.image){ %>
+                                            <img src="<%= post.image %>" class="post-img" onclick="openModal(this.src)">
+                                            <% } %>
+
+
+                            </div>
+                            <% }) %>
+            </div>
+            <!-- IMAGE VIEWER MODAL -->
+            <div id="imageModal" class="modal" onclick="closeModal()">
+                <span class="close">&times;</span>
+                <img class="modal-content" id="modalImg">
+            </div>
+
+            <script>
+                function openModal(src) {
+                    const modal = document.getElementById("imageModal");
+                    const modalImg = document.getElementById("modalImg");
+
+                    modal.style.display = "block";
+                    modalImg.src = src;
+                }
+
+                function closeModal() {
+                    document.getElementById("imageModal").style.display = "none";
+                }
+            </script>
 </body>
 
 </html>

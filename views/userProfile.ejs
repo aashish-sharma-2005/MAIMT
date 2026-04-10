@@ -9,16 +9,17 @@
 </head>
 
 <body>
-    <link rel="stylesheet" href="/css/profile.css">
     <div class="profile">
         <!-- COVER -->
         <div class="cover">
-            <img src="<%= user.coverPhoto || 'https://via.placeholder.com/1000x250' %>" class="cover-img"id="coverImage">
+            <img src="<%= user.coverPhoto || 'https://via.placeholder.com/1000x250' %>" class="cover-img"
+                id="coverImage">
             <label for="coverInput" class="cover-camera">📷</label>
             <input type="file" id="coverInput" hidden onchange="uploadCoverPic()">
             <!-- PROFILE PIC -->
             <div class="profile-pic-wrapper">
-                <img src="<%= user.profilePic && user.profilePic !== '' ? user.profilePic : 'https://via.placeholder.com/120' %>"class="profile-pic" id="profileImage">
+                <img src="<%= user.profilePic && user.profilePic !== '' ? user.profilePic : 'https://via.placeholder.com/120' %>"
+                    class="profile-pic" id="profileImage">
                 <label for="fileInput" class="camera-btn">📷</label>
                 <input type="file" id="fileInput" hidden onchange="uploadProfilePic()">
             </div>
@@ -47,12 +48,12 @@
         </div>
 
         <!-- tabs -->
-        <div>
-            <button onclick="showSection('all')">All</button>
-            <button onclick="showSection('about')">About</button>
-            <button onclick="showSection('friends')">Friends</button>
-            <button onclick="showSection('photos')">Photos</button>
-            <button onclick="showSection('reels')">Reels</button>
+        <div class="tabs">
+            <button class="active" onclick="showSection('all', this)">All</button>
+            <button onclick="showSection('about', this)">About</button>
+            <button onclick="showSection('friends', this)">Friends</button>
+            <button onclick="showSection('photos', this)">Photos</button>
+            <button onclick="showSection('reels', this)">Reels</button>
         </div>
         <div class="content">
             <!-- ALL -->
@@ -69,7 +70,8 @@
             </div>
             <!-- PHOTOS -->
             <div id="photos" class="section" style="display:none;">
-                <%- include('profilefunctions/photos',{user:user,currentUser:currentuser,friends:friends}) %>
+                <%- include('profilefunctions/photos',{user:user,currentUser:currentuser,friends:friends,posts:posts})
+                    %>
             </div>
             <!-- REELS -->
             <div id="reels" class="section" style="display:none;">
@@ -121,13 +123,20 @@
         function profile(id) {
             window.location.href = `/user/profile/${id}`;
         }
-        function showSection(id) {
-            // sab sections hide karo
+        function showSection(id, el) {
+            // sab sections hide
             const sections = document.querySelectorAll('.section');
             sections.forEach(sec => sec.style.display = 'none');
 
-            // sirf clicked wala show karo
+            // selected show
             document.getElementById(id).style.display = 'block';
+
+            // sab tabs se active remove
+            const tabs = document.querySelectorAll('.tabs button');
+            tabs.forEach(btn => btn.classList.remove('active'));
+
+            // clicked tab active
+            el.classList.add('active');
         }
         function addFriend(id) {
             fetch(`/user/friends/${id}`, {
