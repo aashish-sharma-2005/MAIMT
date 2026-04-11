@@ -25,8 +25,11 @@
             </div>
             <!-- NAME -->
             <div class="user-info">
-                <h2><%= user.name %></h2>
-                <p>@<%= user.email.split('@')[0] %></p>
+                <h2>
+                    <%= user.name %>
+                </h2>
+                <p>@<%= user.email.split('@')[0] %>
+                </p>
             </div>
         </div>
         <!-- ACTION BUTTONS -->
@@ -81,6 +84,10 @@
     </div>
 
     <script>
+        window.onload = () => {
+            const activeTab = document.querySelector('.tabs button.active');
+            moveIndicator(activeTab);
+        };
         function uploadCoverPic() {
             const pic = document.getElementById("coverInput").files[0]
             const formdata = new FormData()
@@ -124,19 +131,21 @@
             window.location.href = `/user/profile/${id}`;
         }
         function showSection(id, el) {
-            // sab sections hide
+            // hide all sections
             const sections = document.querySelectorAll('.section');
             sections.forEach(sec => sec.style.display = 'none');
 
-            // selected show
+            // show selected
             document.getElementById(id).style.display = 'block';
 
-            // sab tabs se active remove
+            // remove active
             const tabs = document.querySelectorAll('.tabs button');
             tabs.forEach(btn => btn.classList.remove('active'));
 
-            // clicked tab active
+            // add active
             el.classList.add('active');
+
+            // 👇 MOVE INDICATOR
         }
         function addFriend(id) {
             fetch(`/user/friends/${id}`, {

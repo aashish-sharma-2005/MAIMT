@@ -302,3 +302,28 @@
     font-size: 14px;
     opacity: 0.9;
 }
+/* tabs */
+.tabs {
+    position: relative;
+    display: flex;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabs button {
+    flex: 1;
+    padding: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    color: #555;   /* 👈 ye add kar */
+}
+
+.tabs button.active {
+    color: #1877f2;  /* active blue */
+    border-bottom: 3px solid #1877f2;  /* FB style underline */
+}
+.tabs button:hover {
+    background: none;
+    color: #1877f2;
+}

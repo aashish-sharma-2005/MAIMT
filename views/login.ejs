@@ -16,7 +16,7 @@
     <button onclick="send()">Login</button>
 
     <p>not registered ? <a href="/auth/signup">signup</a></p>
-
+    <p>forgot password ? <a href="/auth/forgot">forgot</a></p>
     <span id="error"></span>
 </div>
 <script>
@@ -29,7 +29,7 @@
 
         if(email === "" || password === ""){
             error.style.color = "red";
-            error.innerText = "Email aur Password dono bharne padenge!";
+            error.innerText = "Email or Password not Enter";
             return;
         }
 

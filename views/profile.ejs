@@ -15,14 +15,10 @@
             <div class="cover">
                 <img src="<%= user.coverPhoto || 'https://via.placeholder.com/1000x250' %>" class="cover-img"
                     id="coverImage">
-                <label for="coverInput" class="cover-camera">📷</label>
-                <input type="file" id="coverInput" hidden onchange="uploadCoverPic()">
                 <!-- PROFILE PIC -->
                 <div class="profile-pic-wrapper">
                     <img src="<%= user.profilePic && user.profilePic !== '' ? user.profilePic : 'https://via.placeholder.com/120' %>"
                         class="profile-pic" id="profileImage">
-                    <label for="fileInput" class="camera-btn">📷</label>
-                    <input type="file" id="fileInput" hidden onchange="uploadProfilePic()">
                 </div>
                 <!-- NAME -->
                 <div class="user-info">
@@ -89,6 +85,10 @@
     </div>
 
     <script>
+        window.onload = () => {
+            const activeTab = document.querySelector('.tabs button.active');
+            moveIndicator(activeTab);
+        };
         function showAboutTab(e, id) {
             // hide all tabs
             const tabs = document.querySelectorAll('.about-tab');
@@ -104,18 +104,18 @@
             window.location.href = `/user/profile/${id}`;
         }
         function showSection(id, el) {
-            // sab sections hide
+            // hide all sections
             const sections = document.querySelectorAll('.section');
             sections.forEach(sec => sec.style.display = 'none');
 
-            // selected show
+            // show selected
             document.getElementById(id).style.display = 'block';
 
-            // sab tabs se active remove
+            // remove active
             const tabs = document.querySelectorAll('.tabs button');
             tabs.forEach(btn => btn.classList.remove('active'));
 
-            // clicked tab active
+            // add active
             el.classList.add('active');
         }
         function acceptFriend(id) {

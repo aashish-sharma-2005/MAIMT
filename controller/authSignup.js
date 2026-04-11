@@ -20,6 +20,8 @@ function getSignup(req,res){
 async function postSignup(req,res){
     try{
         const userInfo = await userValidate.validate(req.body)
+        userInfo.email = userInfo.email.toLowerCase()
+        console.log(userInfo.email)
         // const userInfo = req.body;
         userInfo.password = await bcrypt.hash(userInfo.password,10);
         const data = await UserData.findOne({email:userInfo.email})

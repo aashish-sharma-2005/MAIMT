@@ -29,30 +29,69 @@
                 <option value="friends">👥 Friends</option>
                 <option value="private">🔒 Only Me</option>
             </select>
-            <button type="submit">Post</button>
+            <button id="postBtn" type="submit">Post</button>
         </form>
     </div>
 
-    <script>
-        // toggle input
-        const imageInput = document.getElementById("imageInput");
-        const videoInput = document.getElementById("videoInput");
-        const radios = document.querySelectorAll('input[name="type"]');
+<script>
+    // inputs
+    const imageInput = document.getElementById("imageInput");
+    const videoInput = document.getElementById("videoInput");
+    const radios = document.querySelectorAll('input[name="type"]');
+    const textarea = document.querySelector("textarea");
 
-        radios.forEach(radio => {
-            radio.addEventListener("change", () => {
-                if (radio.value === "image") {
-                    imageInput.style.display = "block";
-                    videoInput.style.display = "none";
-                    videoInput.value = "";
-                } else {
-                    videoInput.style.display = "block";
-                    imageInput.style.display = "none";
-                    imageInput.value = "";
-                }
-            });
+    // form + button
+    const form = document.querySelector(".post-form");
+    const btn = document.getElementById("postBtn");
+
+    // 🔥 toggle image/video
+    radios.forEach(radio => {
+        radio.addEventListener("change", () => {
+            if (radio.value === "image") {
+                imageInput.style.display = "block";
+                videoInput.style.display = "none";
+                videoInput.value = "";
+            } else {
+                videoInput.style.display = "block";
+                imageInput.style.display = "none";
+                imageInput.value = "";
+            }
+            checkForm(); // 👈 important
         });
-    </script>
+    });
+
+    // 🔥 check form validation
+    function checkForm() {
+        let type = document.querySelector('input[name="type"]:checked').value;
+
+        let fileSelected = false;
+
+        if (type === "image") {
+            fileSelected = imageInput.files.length > 0;
+        } else {
+            fileSelected = videoInput.files.length > 0;
+        }
+
+        let textFilled = textarea.value.trim().length > 0;
+
+        // enable/disable button
+        btn.disabled = !(fileSelected && textFilled);
+    }
+
+    // 🔥 events
+    imageInput.addEventListener("change", checkForm);
+    videoInput.addEventListener("change", checkForm);
+    textarea.addEventListener("input", checkForm);
+
+    // 🔥 submit pe disable (duplicate stop)
+    form.addEventListener("submit", () => {
+        btn.disabled = true;
+        btn.innerText = "Posting...";
+    });
+
+    // 🔥 initial state
+    btn.disabled = true;
+</script>
 
 </body>
 

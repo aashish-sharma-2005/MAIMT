@@ -1,44 +1,118 @@
-body{
-    background:#f0f2f5;
+body {
+    background: #f0f2f5;
     font-family: Arial;
 }
 
-.feed-container{
+.feed-container {
     width: 500px;
     margin: auto;
 }
 
-.post-card{
-    background:white;
-    padding:15px;
-    margin:15px 0;
-    border-radius:10px;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+.post-card {
+    background: white;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.post-header{
-    display:flex;
-    gap:10px;
-    align-items:center;
+/* HEADER */
+.post-header {
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
-.profile-img{
-    width:40px;
-    height:40px;
-    border-radius:50%;
+/* ❌ underline remove */
+.post-header a {
+    text-decoration: none;
+    color: black;
 }
 
-.post-content{
-    margin:10px 0;
+.post-header a:hover {
+    text-decoration: none;
 }
 
-.post-img, .post-video{
-    width:100%;
-    border-radius:10px;
+/* PROFILE IMAGE */
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
-.post-actions{
-    display:flex;
-    justify-content:space-around;
-    margin-top:10px;
+/* 🔥 HOVER CARD SYSTEM */
+.profile-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* hidden card */
+.hover-card {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 170px;
+    padding: 12px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+
+    display: none;
+    z-index: 100;
+    text-align: center;
+}
+
+/* show on hover */
+.profile-wrapper:hover .hover-card {
+    display: block;
+}
+
+/* hover card content */
+.hover-pic {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+
+.hover-card h4 {
+    margin: 5px 0;
+}
+
+.hover-card p {
+    font-size: 12px;
+    color: #555;
+    margin: 2px 0;
+}
+
+/* CONTENT */
+.post-content {
+    margin: 10px 0;
+}
+
+/* MEDIA */
+.post-img,
+.post-video {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* ACTIONS */
+.post-actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.post-actions button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.post-actions button:hover {
+    background: #f0f2f5;
 }

@@ -1,47 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Feed</title>
     <link rel="stylesheet" href="/css/feed.css">
 </head>
+
 <body>
     <div class="feed-container">
         <% if(data.length!=0){ %>
-                <% data.forEach(post=> { %>
-                    <div class="post-card">
-                        <!-- USER INFO -->
-                        <div class="post-header">
+            <% data.forEach(post=> { %>
+                <div class="post-card">
+                    <!-- USER INFO -->
+                    <div class="post-header">
+                        <div class="profile-wrapper">
                             <img src="<%= post.user.profilePic || '/default.png' %>" class="profile-img">
-                            <div>
-                                <h4><%= post.user.name %></h4>
-                                <small><%= new Date(post.createdAt).toLocaleString() %></small>
+
+                            <!-- 👇 HOVER CARD -->
+                            <div class="hover-card">
+                                <img src="<%= post.user.profilePic || '/default.png' %>" class="hover-pic">
+                                <h4>
+                                    <%= post.user.name %>
+                                </h4>
+                                <!-- <p>Posts: <%= post.user.posts?.length || 0 %> -->
+                                </p>
+                                <p>Friends: <%= post.user.friends?.length || 0 %>
+                                </p>
                             </div>
                         </div>
-                        <!-- CONTENT -->
-                        <div class="post-content">
-                            <p><%= post.content %></p>
-                        </div>
-                        <!-- IMAGE -->
-                        <div class="post-media">
-                            <% if(post.image){ %>
-                                <img src="<%= post.image %>" class="post-img">
-                            <% } %>
-                            <% if(post.video){ %>
-                                <video controls class="post-video"><source src="<%= post.video %>" type="video/mp4"></video>
-                            <% } %>
-                        </div>
-                        <!-- ACTIONS -->
-                        <div class="post-actions">
-                            <button>👍 Like</button>
-                            <button>💬 Comment</button>
-                            <button>↗️ Share</button>
+
+                        <div>
+                            <a href="/user/profile/<%= post.user._id %>">
+                                <h4>
+                                    <%= post.user.name %>
+                                </h4>
+                            </a>
+                            <small>
+                                <%= new Date(post.createdAt).toLocaleString('en-IN', { day: 'numeric' , month: 'long' ,
+                                    year: 'numeric' , hour: 'numeric' , minute: '2-digit' }) %>
+                            </small>
                         </div>
                     </div>
-                    <% }) %>
-        <% } else { %>
-            <h1>You're All Caught Up</h1>
-        <% } %>
+                    <!-- CONTENT -->
+                    <div class="post-content">
+                        <p>
+                            <%= post.content %>
+                        </p>
+                    </div>
+                    <!-- IMAGE -->
+                    <div class="post-media">
+                        <% if(post.image){ %>
+                            <img src="<%= post.image %>" class="post-img">
+                            <% } %>
+                                <% if(post.video){ %>
+                                    <video controls class="post-video">
+                                        <source src="<%= post.video %>" type="video/mp4">
+                                    </video>
+                                    <% } %>
+                    </div>
+                    <!-- ACTIONS -->
+                    <div class="post-actions">
+                        <button>👍 Like</button>
+                        <button>💬 Comment</button>
+                        <button>↗️ Share</button>
+                    </div>
+                </div>
+                <% }) %>
+                    <% } else { %>
+                        <h1>You're All Caught Up</h1>
+                        <% } %>
     </div>
     <h1>You're All Caught Up</h1>
 </body>

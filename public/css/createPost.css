@@ -39,7 +39,28 @@
     border: 1px solid #ddd;
     background: #f9f9f9;
 }
+/* Normal button */
+button {
+    cursor: pointer;
+    transition: 0.2s;
+}
 
+/* Hover normal state */
+button:hover {
+    opacity: 0.9;
+}
+
+/* Disabled button */
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;   /* 👈 ye hi "unclick sign" hai */
+}
+
+/* Disabled hover (extra safe) */
+button:disabled:hover {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
 /* ===== BUTTON ===== */
 .post-form button {
     width: 100%;

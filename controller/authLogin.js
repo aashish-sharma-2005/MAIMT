@@ -13,7 +13,9 @@ function getLogin(req,res){
 }
 async function postLogin(req,res){
     try{
-        const {email,password} = req.body;
+        const data = req.body;
+        data.email= data.email.toLowerCase()
+        const {email,password} = data;
         const user = await UserData.findOne({email:email})
         if(user){
             const result = await bcrypt.compare(password,user.password)
