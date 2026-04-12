@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/about.css">
 </head>
 
 <body>
@@ -13,6 +14,7 @@
         <!-- LEFT SIDEBAR -->
         <div class="about-left">
             <h3>About</h3>
+
             <ul>
                 <li class="active" onclick="showAboutTab(event,'intro')">Intro</li>
                 <li onclick="showAboutTab(event,'personal')">Personal details</li>
@@ -25,6 +27,12 @@
         <!-- RIGHT CONTENT -->
         <div class="about-right">
 
+            <% if(user._id.toString() === currentUser._id.toString()){ %>
+                <div class="right-header">
+                    <button class="edit-btn">✏️ Edit Profile</button>
+                </div>
+            <% } %>
+
             <div id="intro" class="about-tab">
                 <h3>Bio</h3>
                 <p>About you...</p>
@@ -35,8 +43,7 @@
 
             <div id="personal" class="about-tab" style="display:none;">
                 <h3>Personal Details</h3>
-                <p>Email: <%= user.email %>
-                </p>
+                <p>Email: <%= user.email %></p>
             </div>
 
             <div id="work" class="about-tab" style="display:none;">

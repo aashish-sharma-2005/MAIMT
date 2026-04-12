@@ -5,7 +5,11 @@ const upload = require("../config/cloudinary")
 async function getProfile(req, res) {
     try {
         if (req.user.id === req.params.id) return res.redirect('/user/profile')
-        const posts = await Post.find({ user: req.params.id }).populate("user", "name profilePic").sort({ createdAt: -1 });
+        const posts = await Post.find({ user: req.params.id }).populate("user", "name profilePic friends").sort({ createdAt: -1 });
+        const filteredPosts = posts.filter(post => {
+            if (post.privacy === "public")  return true;
+            if (post.privacy === "friends") return post.user.friends.includes(req.user.id);
+        });
         const user = await UserData.findOne({ _id: req.params.id })
         const friends = await Promise.all(user.friends.map(i => UserData.findById(i)))
         const currentUser = await UserData.findOne({ email: req.user.useremail })
@@ -15,7 +19,7 @@ async function getProfile(req, res) {
             currentUser: currentUser,
             username: req.user.username,
             friends: friends,
-            posts:posts
+            posts: filteredPosts
         })
     } catch (error) {
         console.log(error)
@@ -27,7 +31,7 @@ async function getCurrectProfile(req, res) {
         const posts = await Post.find({ user: req.user.id }).sort({ createdAt: -1 });
         const user = await UserData.findOne({ email: req.user.useremail })
         const friends = await Promise.all(user.friends.map(i => UserData.findById(i)))
-        res.render('home', { page: 'currentprofile', username: req.user.username, user: user, currentuser: user, friends: friends, posts:posts})
+        res.render('home', { page: 'currentprofile', username: req.user.username, user: user, currentuser: user, friends: friends, posts: posts })
     } catch (error) {
         console.log(error)
         res.json({ status: false })
